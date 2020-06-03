@@ -8,6 +8,13 @@ DISCLAIMER: This sample doesn't care about whether the use of API is correct.
 import sys, random
 from locust import HttpLocust, TaskSet
 
+def write_tomcat(locust):
+    """ define a function in python whose name is previewPage and the argument is locust """
+    postid = random.randint(1, 500) # generate a random number from 1 to 100 (include 1 and 100)
+    name = "/editor/post?action=save"
+    url_prefix = '/editor/post?action=save&username=cs144&postid=';
+    locust.client.post(url_prefix + str(postid) + "&title=Loading%20Test&body=***Hello%20World!***", name=name)
+
 def read_tomcat(locust):
     """ define a function in python whose name is previewPage and the argument is locust """
     postid = random.randint(1, 500) # generate a random number from 1 to 100 (include 1 and 100)
@@ -17,7 +24,7 @@ def read_tomcat(locust):
 
 class MyTaskSet(TaskSet):
     """ the class MyTaskSet inherits from the class TaskSet, defining the behavior of the user """
-    tasks = [read_tomcat]
+    tasks = { read_tomcat: 9, write_tomcat: 1 }
     def on_start(locust):
         """ on_start is called when a Locust start before any task is scheduled """
 
