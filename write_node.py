@@ -13,7 +13,7 @@ def write_node(locust):
     postid = random.randint(1, 500) # generate a random number from 1 to 100 (include 1 and 100)
     name = "/api/cs144"
     url_prefix = '/api/cs144/';
-    locust.client.post(url_prefix + str(postid), { "title":"Loading Test", "body":"***Hello World!***" }, name=name)
+    locust.client.put(url_prefix + str(postid), data={ "title":"Loading Test", "body":"***Hello World!***" }, name=name)
 
 class MyTaskSet(TaskSet):
     """ the class MyTaskSet inherits from the class TaskSet, defining the behavior of the user """
